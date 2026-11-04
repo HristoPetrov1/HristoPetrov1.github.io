@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="Zhao Xuhang, Oliver, World Models, Video Diffusion, Embodied AI, Peking University">
+<meta name="description" content="Zhao Xuhang (Oliver)'s Academic Homepage - World Models · Video Diffusion · Embodied AI">
+<link rel="icon" type="image/jpeg" href="assets/avatar.jpg">
+<style>
+/* jemdoc.css - Lavender Purple Theme (Frostlinx style) */
+
+html {
+  background-color: #eee8f3;
+  scroll-behavior: smooth;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpolygon points='20,8 21.2,12 25,12 22,14.3 23,18 20,16 17,18 18,14.3 15,12 18.8,12' fill='%23d4a5e8' opacity='0.12'/%3E%3Cpolygon points='80,55 81,58 84,58 81.5,59.8 82.3,63 80,61.2 77.7,63 78.5,59.8 76,58 79,58' fill='%23ffe9a0' opacity='0.1'/%3E%3Cellipse cx='55' cy='95' rx='3.5' ry='3.5' fill='%23d4a5e8' opacity='0.08'/%3E%3Cellipse cx='53' cy='88' rx='1.5' ry='4' fill='%23d4a5e8' opacity='0.08' transform='rotate(-10 53 88)'/%3E%3Cellipse cx='58' cy='87' rx='1.5' ry='4' fill='%23d4a5e8' opacity='0.08' transform='rotate(10 58 87)'/%3E%3Cpolygon points='100,25 100.8,27.5 103.5,27.5 101.3,29 102,31.5 100,30 98,31.5 98.7,29 96.5,27.5 99.2,27.5' fill='%23c9a0dc' opacity='0.09'/%3E%3C/svg%3E");
+}
+
+body {
+  font-family: Georgia, "Songti SC", "SimSun", serif;
+  color: #000;
+  background-color: #ffffff;
+  text-align: left;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  max-width: 960px;
+  border-radius: 4px;
+  box-shadow: 0 2px 30px rgba(107, 79, 138, 0.10);
+}
+
+@media (max-width: 720px) {
+  body { padding-left: 18px; padding-right: 18px; }
+  .hero-right { display: none; }
+}
+
+/* ===== 顶部渐变彩条 ===== */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, #b48cd8, #d4a5e8, #f0c6ff, #ffe9a0, #d4a5e8, #b48cd8);
+  background-size: 200% 100%;
+  animation: gradient-shift 4s ease infinite;
+  z-index: 10000;
+}
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== 标题 ===== */
+h1, h2, h3 { color: #6b4f8a; line-height: 1.2; }
+h1 { font-size: 165%; }
+h2 {
+  font-size: 128%;
+  font-weight: 700;
+  border-left: 4px solid #8b45b0;
+  padding-left: 12px;
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
+}
+h3 { font-size: 110%; }
+p { margin-top: 0; margin-bottom: 0.8em; padding: 0; line-height: 1.55; }
+
+a {
+  color: #6b4f8a;
+  text-decoration: none;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+a:hover { color: #8b45b0; border-bottom: 1px #8b45b0 dotted; }
+
+em { font-style: italic; }
+strong { font-weight: bold; }
+.purple { color: #8b45b0; }
+.purple b { color: #8b45b0; }
+
+/* ===== GitHub 角标 ===== */
+.github-corner:hover .octo-arm { animation: octocat-wave 560ms ease-in-out; }
+@keyframes octocat-wave { 0%,100%{transform:rotate(0)} 20%,60%{transform:rotate(-25deg)} 40%,80%{transform:rotate(10deg)} }
+@media (max-width:500px){ .github-corner:hover .octo-arm{animation:none} .github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out} }
+
+/* ===== Hero 卡片 ===== */
+.hero-card {
+  background: linear-gradient(135deg, #f8f4fc 0%, #ede4f5 50%, #f3eef8 100%);
+  border-radius: 16px;
+  padding: 30px 35px;
+  box-shadow: 0 4px 20px rgba(107, 79, 138, 0.12);
+  margin-top: 25px;
+  margin-bottom: 1.5em;
+}
+.hero-card table { width: 100%; border-collapse: collapse; }
+.hero-card td { border: none; vertical-align: top; }
+#typed-title { border-right: 2px solid #8b45b0; animation: blink-caret 0.7s step-end infinite; padding-right: 2px; }
+@keyframes blink-caret { from, to { border-color: transparent; } 50% { border-color: #8b45b0; } }
+
+.social-icon {
+  margin-right: 15px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+.social-icon:hover { transform: translateY(-3px) scale(1.15); }
+
+/* ===== Biography ===== */
+.bio-box {
+  background: #faf8fc;
+  border-left: 4px solid #8b45b0;
+  border-radius: 0 12px 12px 0;
+  padding: 20px 25px;
+  box-shadow: 0 2px 12px rgba(107, 79, 138, 0.08);
+}
+
+/* ===== News ===== */
+.news-box {
+  height: 200px;
+  overflow: auto;
+  border-radius: 8px;
+  padding: 5px 0;
+}
+.news-box::-webkit-scrollbar { width: 6px; }
+.news-box::-webkit-scrollbar-track { background: #f3eef8; border-radius: 3px; }
+.news-box::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #8b45b0, #c084fc); border-radius: 3px; }
+table.news-table { width: 100%; border-collapse: separate; border-spacing: 0 4px; }
+tr.news-item td { padding: 8px 15px; border-radius: 8px; transition: background-color 0.3s ease; }
+tr.news-item:hover td { background-color: #f8f4fc; }
+
+/* ===== 条目表格（教育/经历/论文/项目） ===== */
+table.items { width: 100%; border-collapse: separate; border-spacing: 0 6px; }
+table.items tr { position: relative; z-index: 1; }
+table.items tr.entry { transition: background-color 0.3s ease; }
+table.items tr.entry:hover { background-color: #f8f4fc; border-radius: 8px; z-index: 100; position: relative; }
+table.items td { border: none; vertical-align: middle; padding: 12px 15px; }
+table.items tr.gap td { padding: 0; }
+.entry-title { font-weight: bold; }
+.entry-note { color: #666; font-size: 0.92em; }
+.year-tag { color: #8b45b0; font-weight: bold; white-space: nowrap; margin-left: 8px; font-size: 0.9em; }
+
+/* 会议徽章 */
+.venue {
+  display: inline-block;
+  background: #f3eef8;
+  border: 1px solid #d8c8ed;
+  color: #6b4f8a;
+  border-radius: 20px;
+  padding: 1px 10px;
+  font-size: 0.85em;
+  font-weight: bold;
+  margin-left: 8px;
+}
+.venue.under { background: #fff8e8; border-color: #f0dfb2; color: #9a7b2d; }
+
+/* 链接小按钮 */
+.btn {
+  display: inline-block;
+  background: #f3eef8;
+  border: 1px solid #d8c8ed;
+  color: #6b4f8a;
+  border-radius: 6px;
+  padding: 1px 9px;
+  font-size: 0.85em;
+  margin-right: 6px;
+  transition: all 0.25s ease;
+}
+.btn:hover { background: #8b45b0; color: #fff; border-color: #8b45b0; }
+
+/* 技能标签 */
+.tag {
+  display: inline-block;
+  background: #f8f4fc;
+  border: 1px solid #e2d4f0;
+  color: #6b4f8a;
+  border-radius: 20px;
+  padding: 3px 13px;
+  margin: 3px 4px 3px 0;
+  font-size: 0.9em;
+  transition: all 0.25s ease;
+}
+.tag:hover { background: #8b45b0; color: #fff; border-color: #8b45b0; transform: translateY(-2px); }
+
+/* ===== 滚动入场动画 ===== */
+.fade-section { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.fade-section.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== 页脚 ===== */
+#footer {
+  font-size: small;
+  border-top: 1px solid #c0c0c0;
+  padding-top: 0.6em;
+  margin-top: 4em;
+  color: #c0c0c0;
+  overflow: hidden;
+}
+#footer a { color: #9b7cc9; }
+</style>
+<title>Zhao Xuhang (Oliver) @PKU</title>
+</head>
+<body>
+
+<a href="https://github.com/HristoPetrov1" class="github-corner" aria-label="GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#8b6aae; color:#fff; position: absolute; top: 0; border: 0; right: 0;"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<!-- ================= HERO ================= -->
+<div class="hero-card fade-section">
+<table><tbody><tr>
+  <td style="vertical-align: top;">
+    <div id="toptitle">
+      <h1 style="margin-top: 0;"><span id="typed-title"></span></h1>
+    </div>
+    <h3 style="margin-top: 0;">🎓 Undergraduate <span class="purple">@Peking University</span></h3>
+    <p>
+      School of Mathematical Sciences &amp; School of Computer Science, Peking University<br>
+      <br>
+      Email: <a href="mailto:sarayaoliver0319@gmail.com">sarayaoliver0319 [at] gmail.com</a><br>
+      X (Twitter): <a href="https://x.com/Sorayacfpf" target="_blank">Sorayacfpf</a><br>
+      Instagram: <a href="https://instagram.com/sarayaomnirobotic" target="_blank">sarayaomnirobotic</a>
+    </p>
+    <p>
+      <a href="https://github.com/HristoPetrov1" class="social-icon"><img src="https://cdn.simpleicons.org/github/8b45b0" height="30px" style="vertical-align: middle;" alt="GitHub"></a>
+      <a href="mailto:sarayaoliver0319@gmail.com" class="social-icon"><img src="https://cdn.simpleicons.org/gmail/8b45b0" height="30px" style="vertical-align: middle;" alt="Email"></a>
+      <a href="https://x.com/Sorayacfpf" target="_blank" class="social-icon"><img src="https://cdn.simpleicons.org/x/8b45b0" height="30px" style="vertical-align: middle;" alt="X"></a>
+      <a href="https://instagram.com/sarayaomnirobotic" target="_blank" class="social-icon"><img src="https://cdn.simpleicons.org/instagram/8b45b0" height="30px" style="vertical-align: middle;" alt="Instagram"></a>
+    </p>
+  </td>
+  <td class="hero-right" style="text-align: center; vertical-align: middle; padding-left: 30px; white-space: nowrap;">
+    <img src="assets/avatar.jpg" width="230px" style="border-radius: 14px; box-shadow: 0 6px 24px rgba(107, 79, 138, 0.2); vertical-align: middle;" alt="avatar">
+    <img src="https://img.shields.io/badge/World_Models-4_Papers_在投-8b45b0?style=for-the-badge" style="vertical-align: middle; margin-left: 15px; opacity: 0.9;" alt="papers">
+  </td>
+</tr></tbody></table>
+</div>
+
+<!-- ================= BIOGRAPHY ================= -->
+<h2 class="fade-section">Biography</h2>
+<div class="bio-box fade-section">
+<p>
+  Hello! I am an undergraduate at
+  <span class="purple"><b>Peking University</b></span>, double-majoring in
+  <span class="purple"><b>Mathematics &amp; Applied Mathematics</b></span> and
+  <span class="purple"><b>Computer Science</b></span> (2026.09 – 2030.06).
+</p>
+<p>
+  Currently, I am working on <span class="purple"><b>Omni-modal World Models &amp; Spatial Intelligence</b></span> as a research intern at
+  <span class="purple"><b>BAAI</b></span>, and a multimodal world-model algorithm intern at
+  <span class="purple"><b>ByteDance Seed</b></span>. I have 4 first/co-first-author papers under review at ICLR / CVPR.
+</p>
+<p>
+  My research spans <span class="purple"><b>Video Diffusion</b></span>, <span class="purple"><b>3D-Aware Generation</b></span>,
+  <span class="purple"><b>Stereo Depth</b></span> and <span class="purple"><b>Embodied Intelligence</b></span> —
+  teaching models to understand and simulate the spatiotemporal dynamics of the real world.
+  Mathematics is my underlying operating system: from functional analysis to differential manifolds, from dynamical systems to reinforcement learning.
+</p>
+<p style="margin-bottom: 0;"><i class="purple">Feel free to contact me by email if you are interested in discussing or collaborating with me.</i></p>
+</div>
+
+<!-- ================= NEWS ================= -->
+<h2 class="fade-section">News</h2>
+<div class="news-box fade-section">
+<table class="news-table"><tbody>
+  <tr class="news-item"><td>[2026.10] Joined <b>ByteDance Seed</b> as multimodal world-model algorithm intern!</td></tr>
+  <tr class="news-item"><td>[2026.10] <b>StereoAnythingT1</b> submitted to <b>CVPR 2026</b>, good luck!</td></tr>
+  <tr class="news-item"><td>[2026.10] <b>Omni Latitude-World</b> submitted to <b>CVPR 2026</b>, good luck!</td></tr>
+  <tr class="news-item"><td>[2026.09] Joined <span class="purple"><b>SpAItial AI</b></span> Echo-3 spatial world model project as core researcher!</td></tr>
+  <tr class="news-item"><td>[2026.08] Joined <span class="purple"><b>BAAI</b></span> as research intern on omni-modal world models!</td></tr>
+  <tr class="news-item"><td>[2026.09] <b>OmniWorld</b> submitted to <b>ICLR 2026</b>, good luck!</td></tr>
+  <tr class="news-item"><td>[2026.09] <b>EMOI</b> submitted to <b>CVPR 2026</b>, good luck!</td></tr>
+  <tr class="news-item"><td>[2026] <b>PenguinHarness</b> open-source evaluation framework reached <b>3.1K Stars</b>!</td></tr>
+  <tr class="news-item"><td>[2026] <b>NOI 2026</b> Gold Medal!</td></tr>
+  <tr class="news-item"><td>[2026] <b>ICRA 2026</b> Honorable Mention!</td></tr>
+  <tr class="news-item"><td>[2026.09] Enrolled at <b>Peking University</b>, double major in Math &amp; CS!</td></tr>
+</tbody></table>
+</div>
+
+<!-- ================= EDUCATION ================= -->
+<h2 class="fade-section">Education</h2>
+<table class="items fade-section"><tbody>
+  <tr class="entry">
+    <td width="130" style="text-align:center;">
+      <img src="https://img.shields.io/badge/PKU-北京大学-8C1515?style=for-the-badge" alt="PKU">
+    </td>
+    <td>
+      <p><b>Peking University, Beijing</b> <span class="year-tag">2026.09 – 2030.06</span></p>
+      <p>B.S. Candidate in <b>Mathematics &amp; Applied Mathematics</b> × <b>Computer Science</b> (Double Major)</p>
+      <p class="entry-note">School of Mathematical Sciences &amp; School of Computer Science</p>
+    </td>
+  </tr>
+</tbody></table>
+
+<!-- ================= EXPERIENCE ================= -->
+<h2 class="fade-section">Internship Experience</h2>
+<table class="items fade-section"><tbody>
+  <tr class="entry">
+    <td width="130" style="text-align:center;">
+      <img src="https://img.shields.io/badge/ByteDance-Seed-3C2B6E?style=for-the-badge&logo=bytedance&logoColor=white" alt="ByteDance">
+    </td>
+    <td>
+      <p><b>ByteDance · Seed</b> — Multimodal World Model Algorithm Intern <span class="year-tag">2026.10 – Present</span></p>
+      <p class="entry-note">Audio-Video-Motion-Text 四模态统一时空动力学预训练：节拍对齐率 <b>+25%</b>、长视频生成稳定 <b>60s+</b> 无坍缩、预训练吞吐 <b>+40%</b></p>
+    </td>
+  </tr>
+  <tr class="gap"><td colspan="2"></td></tr>
+  <tr class="entry">
+    <td width="130" style="text-align:center;">
+      <img src="https://img.shields.io/badge/BAAI-北京智源-8b45b0?style=for-the-badge" alt="BAAI">
+    </td>
+    <td>
+      <p><b>Beijing Academy of Artificial Intelligence (BAAI)</b> — Research Intern <span class="year-tag">2026.08 – Present</span></p>
+      <p class="entry-note">全模态世界模型方向核心研究成员，主导/参与 4 项在投工作（ICLR ×1 / CVPR ×3）与千万级 3D 数据集 Puffin-16M 数据管线</p>
+    </td>
+  </tr>
+</tbody></table>
+
+<!-- ================= PUBLICATIONS ================= -->
+<h2 class="fade-section">Publications <span class="entry-note">（4 篇顶会在投 · 🥇独立一作 / 🤝共同一作）</span></h2>
+<table class="items fade-section"><tbody>
+  <tr class="entry">
+    <td>
+      <p><b>OmniWorld</b>: 基于全模态几何先验的三维一致性视频世界模型 <span class="venue under">ICLR 2026 在投</span></p>
+      <p><b><u>Zhao Xuhang</u></b>（🥇 独立第一作者）</p>
+      <p class="entry-note">"先几何、后外观"两阶段解耦架构：预训练 3D 基础模型蒸馏几何先验（Geometry Diffusion），再以外观扩散模型渲染目标视频，大幅提升大视角变换下的三维一致性。</p>
+    </td>
+  </tr>
+  <tr class="entry">
+    <td>
+      <p><b>EMOI</b>: 面向具身交互的世界模型运动学与物理动态解耦 <span class="venue under">CVPR 2026 在投</span></p>
+      <p><b><u>Zhao Xuhang</u></b>*（🤝 共同第一作者）</p>
+      <p class="entry-note">融合解析运动学先验与数据驱动物理动态；正向运动学渲染三视正交投影消除标定依赖；在 RoboTwin 基准与实体机器人上验证，生成数据训练策略性能媲美真机遥操数据。</p>
+    </td>
+  </tr>
+  <tr class="entry">
+    <td>
+      <p><b>Omni Latitude-World</b>: 基于原生三维世界状态的统一多模态世界模型 <span class="venue under">CVPR 2026 在投</span></p>
+      <p><b><u>Zhao Xuhang</u></b>*（🤝 共同第一作者）</p>
+      <p class="entry-note">将底层表征从 2D 像素扩展至原生 3D 世界状态（Native 3D World States）；主导构建千万级 3D 数据集 <b>Puffin-16M</b>，探索 3D 表征的 Scaling Law。</p>
+    </td>
+  </tr>
+  <tr class="entry">
+    <td>
+      <p><b>StereoAnythingT1</b>: 端到端泛化双目深度估计与实时稠密三维感知 <span class="venue under">CVPR 2026 在投</span></p>
+      <p><b><u>Zhao Xuhang</u></b>*（🤝 共一 / 核心研发，主导 Idea、算法架构与全流程训练）</p>
+      <p class="entry-note">极限场景（透明塑料/反光袋/细长线缆）边界 <b>EPE 降至 0.4px 级</b>；Middlebury / KITTI <b>零样本泛化显著领先</b>；640×480 下 <b>30+ FPS</b> 实时稠密彩色三维点云。</p>
+    </td>
+  </tr>
+</tbody></table>
+
+<!-- ================= PROJECTS ================= -->
+<h2 class="fade-section">Projects</h2>
+<table class="items fade-section"><tbody>
+  <tr class="entry">
+    <td>
+      <p><b>🛰️ SpAItial AI · Echo-3 空间世界模型</b> — 核心研发 <span class="year-tag">2026.09 – Present</span> <a class="btn" href="https://spaitial.ai/?hl=zh-CN">Website</a></p>
+      <p class="entry-note">端到端空间世界模型：从移动端随手拍视频到<b>米制尺度（Metric-scale）3D 场景重建与生成</b>；分层空间切块 + <b>3D 高斯表征</b>管线，支持单房间扩展至户外超大场景；多机多卡混合并行训练框架。</p>
+    </td>
+  </tr>
+  <tr class="gap"><td colspan="2"></td></tr>
+  <tr class="entry">
+    <td>
+      <p><b>🐧 PenguinHarness</b> — 开源评估框架与算法复现 · 核心开发者 <span class="venue">⭐ 3.1K Star</span> <a class="btn" href="https://github.com/Prism-Shadow/penguin-harness-benchmark">GitHub</a></p>
+      <p class="entry-note">面向自进化与推理自提升（RSI）的开源评测套件：统一 RSI Benchmark 与插件化评测标准，复现主流 RSI 算法，提供可复现实验基线与社区双周会分享。</p>
+    </td>
+  </tr>
+  <tr class="gap"><td colspan="2"></td></tr>
+  <tr class="entry">
+    <td>
+      <p><b>📈 股指中低频择时系统</b> — 因子计算引擎与数学基础设施 · 核心开发者</p>
+      <p class="entry-note">向量化数学计算库 + 高保真回测仿真框架，三层严苛检验管线杜绝过拟合；IC 同口径累计收益 <b>+163.2% → +308.0%</b>（Sharpe <b>2.34</b>，回撤 <b>-6.9%</b>），<b>零样本泛化</b>至 IH / IF / IM。</p>
+    </td>
+  </tr>
+</tbody></table>
+
+<!-- ================= HONORS ================= -->
+<h2 class="fade-section">Honors &amp; Awards</h2>
+<table class="items fade-section"><tbody>
+  <tr class="entry">
+    <td><p>🥇 <b>Gold Medal</b> — NOI（全国青少年信息学奥林匹克）<span class="year-tag">2026</span></p></td>
+  </tr>
+  <tr class="entry">
+    <td><p>🎖 <b>Honorable Mention</b> — ICRA 2026 <span class="year-tag">2026</span></p></td>
+  </tr>
+</tbody></table>
+
+<!-- ================= SKILLS ================= -->
+<h2 class="fade-section">Research Interests &amp; Skills</h2>
+<div class="bio-box fade-section" style="border-left-color:#d8c8ed;">
+  <p style="margin-bottom:0.4em;"><b class="purple">研究方向</b> <span class="entry-note">（围绕「物理世界理解 → 表征 → 生成 → 具身演进」的全链路）</span></p>
+  <p style="margin-bottom:0.4em;"><b>🧠 多模态统一与预训练</b></p>
+  <p>
+    <span class="tag">多模态感知</span><span class="tag">原生多模态统一骨干网络</span><span class="tag">统一离散/连续表征与多模态</span><span class="tag">多任务联合预训练与对齐</span>
+  </p>
+  <p style="margin-bottom:0.4em;"><b>🌍 物理世界理解与机器感知</b></p>
+  <p>
+    <span class="tag">物理常识与因果推理</span><span class="tag">物理驱动的场景理解与机器感知</span>
+  </p>
+  <p style="margin-bottom:0.4em;"><b>🧊 3D/4D 空间智能</b></p>
+  <p>
+    <span class="tag">3D/4D 物理世界生成与重建</span><span class="tag">空间与几何重建</span><span class="tag">3D Gaussian Splatting</span><span class="tag">Stereo Depth</span>
+  </p>
+  <p style="margin-bottom:0.4em;"><b>🤖 世界模型与具身智能</b></p>
+  <p>
+    <span class="tag">世界模型与动态视频生成</span><span class="tag">具身与世界模型演进</span><span class="tag">Video Diffusion</span><span class="tag">Embodied Intelligence</span><span class="tag">VLA</span>
+  </p>
+  <p style="margin-bottom:0.4em;"><b class="purple">工程与系统</b></p>
+  <p>
+    <span class="tag">PyTorch</span><span class="tag">DeepSpeed</span><span class="tag">Megatron-LM</span><span class="tag">FlashAttention</span><span class="tag">CUDA / Triton</span><span class="tag">TensorRT</span><span class="tag">Isaac Gym</span><span class="tag">MuJoCo / SAPIEN</span>
+  </p>
+  <p style="margin-bottom:0;"><b class="purple">数学底座</b></p>
+  <p style="margin-bottom:0;">
+    <span class="tag">泛函分析</span><span class="tag">微分流形</span><span class="tag">动力系统</span><span class="tag">随机过程</span><span class="tag">最优化</span><span class="tag">强化学习理论</span>
+  </p>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<div id="footer">
+  <div id="footer-text">
+    © 2026 Zhao Xuhang (Oliver) · <a href="https://github.com/HristoPetrov1">GitHub</a> · <a href="mailto:sarayaoliver0319@gmail.com">Email</a> · <a href="https://x.com/Sorayacfpf" target="_blank">X</a> · <a href="https://instagram.com/sarayaomnirobotic" target="_blank">Instagram</a>
+    <span style="float:right;">✧ Powered by Zhao Xuhang · Last updated Nov 2026</span>
+  </div>
+</div>
+
+<script>
+/* 打字机标题 */
+(function(){
+  var el = document.getElementById('typed-title');
+  var lines = ['Zhao Xuhang (Oliver) @PKU', '赵旭航 @北京大学'];
+  var li = 0, ci = 0, deleting = false;
+  function tick(){
+    var text = lines[li];
+    if (!deleting) {
+      ci++;
+      el.textContent = text.slice(0, ci);
+      if (ci >= text.length) { deleting = true; return setTimeout(tick, 2600); }
+      setTimeout(tick, 90);
+    } else {
+      ci--;
+      el.textContent = text.slice(0, ci);
+      if (ci <= 0) { deleting = false; li = (li + 1) % lines.length; return setTimeout(tick, 500); }
+      setTimeout(tick, 40);
+    }
+  }
+  tick();
+})();
+
+/* 滚动入场 */
+(function(){
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-section').forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+</body>
+</html>
